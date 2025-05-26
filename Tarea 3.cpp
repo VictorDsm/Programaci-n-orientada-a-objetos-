@@ -2,14 +2,12 @@
 #include <vector>
 using namespace std;
 
-// Clase base abstracta
 class Figura {
 public:
-    virtual double area() = 0;  // Método virtual puro
-    virtual ~Figura() {}        // Destructor virtual
+    virtual double area() = 0;  
+    virtual ~Figura() {}        
 };
 
-// Clase Triángulo
 class Triangulo : public Figura {
 private:
     double base, altura;
@@ -20,7 +18,6 @@ public:
     }
 };
 
-// Clase Cuadrado
 class Cuadrado : public Figura {
 private:
     double lado;
@@ -31,7 +28,6 @@ public:
     }
 };
 
-// Clase Círculo
 class Circulo : public Figura {
 private:
     double diametro;
@@ -44,18 +40,18 @@ public:
 };
 
 int main() {
-    // Arreglo de punteros a figuras
+  
     vector<Figura*> figuras;
     figuras.push_back(new Triangulo(8, 4));
     figuras.push_back(new Cuadrado(5));
     figuras.push_back(new Circulo(10));
 
-    // Mostrar áreas
+    
     for (size_t i = 0; i < figuras.size(); ++i) {
         cout << "Área de la figura " << i + 1 << ": " << figuras[i]->area() << endl;
     }
 
-    // Liberar memoria
+    
     for (Figura* f : figuras) {
         delete f;
     }
