@@ -1,65 +1,29 @@
 #include <iostream>
-#include <cmath>
-#define _USE_MATH_DEFINES
 using namespace std;
 
-class Figura {
-public:
-    virtual double area() = 0;
-    virtual ~Figura() {}
-};
-
-class Triangulo : public Figura {
-private:
-    double base, altura;
-
-public:
-    Triangulo(double b, double h) : base(b), altura(h) {}
-
-    double area() override {
-        return (base * altura) / 2;
-    }
-};
-
-class Cuadrado : public Figura {
-private:
-    double lado;
-
-public:
-    Cuadrado(double l) : lado(l) {}
-
-    double area() override {
-        return lado * lado;
-    }
-};
-
-class Circulo : public Figura {
-private:
-    double diametro;
-
-public:
-    Circulo(double d) : diametro(d) {}
-
-    double area() override {
-        double radio = diametro / 2;
-        return M_PI * radio * radio;
-    }
-};
-
 int main() {
-    Figura* figuras[3];
+    int opcion;
 
-    figuras[0] = new Triangulo(8, 4);
-    figuras[1] = new Cuadrado(5);
-    figuras[2] = new Circulo(10);
+    cout << "===== MENU =====" << endl;
+    cout << "1. Saludar" << endl;
+    cout << "2. Sumar dos numeros" << endl;
+    cout << "3. Salir" << endl;
+    cout << "Elige una opcion: ";
+    cin >> opcion;
 
-    cout << "Área del triángulo: " << figuras[0]->area() << endl;
-    cout << "Área del cuadrado: " << figuras[1]->area() << endl;
-    cout << "Área del círculo: " << figuras[2]->area() << endl;
-
-    for (int i = 0; i < 3; i++) {
-        delete figuras[i];
+    if (opcion == 1) {
+        cout << "Hola! Este es un saludo." << endl;
+    } else if (opcion == 2) {
+        int a, b;
+        cout << "Ingresa dos numeros: ";
+        cin >> a >> b;
+        cout << "La suma es: " << a + b << endl;
+    } else if (opcion == 3) {
+        cout << "Saliendo del programa..." << endl;
+    } else {
+        cout << "Opcion no valida." << endl;
     }
 
     return 0;
 }
+
