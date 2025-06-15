@@ -1,106 +1,97 @@
 #include <iostream>
+#include <cmath>
 using namespace std;
 
-// Interfaz del repositorio
-class IRepoFigGeo {
+// Interfaz de impresión
+class FigPrinter {
 public:
-    virtual void SaveArea(float area) = 0;
-    virtual ~IRepoFigGeo() {}
+    virtual void imprimir(const string& nombre, double area, double perimetro) const = 0;
+    virtual ~FigPrinter() {}
 };
 
-// Repositorio MySQL
-class RepoMySql : public IRepoFigGeo {
+// Implementación concreta que imprime en consola
+class ConsolaFigPrinter : public FigPrinter {
 public:
-    void SaveArea(float area) override {
-        cout << "[MySQL] Area guardada: " << area << endl;
+    void imprimir(const string& nombre, double area, double perimetro) const override {
+        cout << nombre << "\n";
+        cout << "Area: " << area << "\n";
+        cout << "Perimetro: " << perimetro << "\n\n";
     }
 };
 
-// Repositorio CSV
-class RepoCSV : public IRepoFigGeo {
-public:
-    void SaveArea(float area) override {
-        cout << "[CSV] Area guardada: " << area << endl;
-    }
-};
-
-// Clase base para figuras
-class FigGeo {
+// Interfaz de Figura
+class Figura {
 protected:
-    float area;
-    IRepoFigGeo* repo;
+    FigPrinter* printer;
 public:
-    FigGeo(IRepoFigGeo* r) : area(0), repo(r) {}
-    virtual float calcArea() = 0;
-    virtual void PrintDetails() = 0;
-
-    void saveArea() {
-        area = calcArea();
-        if (repo) repo->SaveArea(area);
-    }
+    Figura(FigPrinter* p) : printer(p) {}
+    virtual double area() const = 0;
+    virtual double perimetro() const = 0;
+    virtual void mostrar() const = 0;
+    virtual ~Figura() {}
 };
 
-// Cuadrado
-class Square : public FigGeo {
-    float lado;
+// Triángulo equilátero
+class Triangulo : public Figura {
+private:
+    double base, altura;
 public:
-    Square(float l, IRepoFigGeo* r) : FigGeo(r), lado(l) {}
+    Triangulo(double b, double h, FigPrinter* p) : Figura(p), base(b), altura(h) {}
 
-    float calcArea() override {
-        return lado * lado;
-    }
-
-    void PrintDetails() override {
-        cout << "Cuadrado -> lado = " << lado << ", area = " << area << endl;
-    }
-};
-
-// Triángulo
-class Triangle : public FigGeo {
-    float base, altura;
-public:
-    Triangle(float b, float h, IRepoFigGeo* r) : FigGeo(r), base(b), altura(h) {}
-
-    float calcArea() override {
+    double area() const override {
         return (base * altura) / 2;
     }
 
-    void PrintDetails() override {
-        cout << "Triangulo -> base = " << base << ", altura = " << altura << ", area = " << area << endl;
+    double perimetro() const override {
+        return base * 3;
+    }
+
+    void mostrar() const override {
+        printer->imprimir("Triangulo", area(), perimetro());
     }
 };
 
 // Círculo
-class Circle : public FigGeo {
-    float radio;
+class Circulo : public Figura {
+private:
+    double radio;
 public:
-    Circle(float r, IRepoFigGeo* repo) : FigGeo(repo), radio(r) {}
+    Circulo(double r, FigPrinter* p) : Figura(p), radio(r) {}
 
-    float calcArea() override {
-        return 3.14 * radio * radio;
+    double area() const override {
+        return M_PI * radio * radio;
     }
 
-    void PrintDetails() override {
-        cout << "Circulo -> radio = " << radio << ", area = " << area << endl;
+    double perimetro() const override {
+        return 2 * M_PI * radio;
+    }
+
+    void mostrar() const override {
+        printer->imprimir("Circulo", area(), perimetro());
     }
 };
 
-// Programa principal
+// Fábrica
+class FiguraFactory {
+public:
+    static Figura* crear(const string& tipo, FigPrinter* printer) {
+        if (tipo == "triangulo") return new Triangulo(3, 4, printer);
+        if (tipo == "circulo") return new Circulo(2.5, printer);
+        return nullptr;
+    }
+};
+
+// Principal
 int main() {
-    RepoMySql mysql;
-    RepoCSV csv;
+    ConsolaFigPrinter printer;
+    Figura* f1 = FiguraFactory::crear("triangulo", &printer);
+    Figura* f2 = FiguraFactory::crear("circulo", &printer);
 
-    Square c1(2.0, &mysql);
-    c1.saveArea();
-    c1.PrintDetails();
+    if (f1) f1->mostrar();
+    if (f2) f2->mostrar();
 
-    Triangle t1(3.0, 4.0, &mysql);
-    t1.saveArea();
-    t1.PrintDetails();
-
-    Circle cir1(1.5, &csv);
-    cir1.saveArea();
-    cir1.PrintDetails();
+    delete f1;
+    delete f2;
 
     return 0;
 }
