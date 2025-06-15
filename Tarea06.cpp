@@ -2,14 +2,14 @@
 #include <cmath>
 using namespace std;
 
-// Interfaz de impresión
+// Interfaz de impresion
 class FigPrinter {
 public:
     virtual void imprimir(const string& nombre, double area, double perimetro) const = 0;
     virtual ~FigPrinter() {}
 };
 
-// Implementación concreta que imprime en consola
+// Implementacion concreta que imprime en consola
 class ConsolaFigPrinter : public FigPrinter {
 public:
     void imprimir(const string& nombre, double area, double perimetro) const override {
@@ -31,7 +31,7 @@ public:
     virtual ~Figura() {}
 };
 
-// Triángulo equilátero
+// Triangulo equilatero
 class Triangulo : public Figura {
 private:
     double base, altura;
@@ -51,7 +51,7 @@ public:
     }
 };
 
-// Círculo
+// Circulo
 class Circulo : public Figura {
 private:
     double radio;
@@ -71,7 +71,7 @@ public:
     }
 };
 
-// Fábrica
+// Fabrica
 class FiguraFactory {
 public:
     static Figura* crear(const string& tipo, FigPrinter* printer) {
