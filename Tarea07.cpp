@@ -2,20 +2,20 @@
 #include <cmath>
 using namespace std;
 
-// Interfaz de impresión
+// Interfaz de impresion
 class FigPrinter {
 public:
     virtual void imprimir(const string& nombre, double area, double perimetro) const = 0;
     virtual ~FigPrinter() {}
 };
 
-// Implementación concreta que imprime en consola
+// Implementacion concreta que imprime en consola
 class ConsolaFigPrinter : public FigPrinter {
 public:
     void imprimir(const string& nombre, double area, double perimetro) const override {
         cout << nombre << "\n";
-        cout << "Área: " << area << "\n";
-        cout << "Perímetro: " << perimetro << "\n\n";
+        cout << "Area: " << area << "\n";
+        cout << "Perimetro: " << perimetro << "\n\n";
     }
 };
 
@@ -31,7 +31,7 @@ public:
     virtual ~Figura() {}
 };
 
-// Triángulo equilátero
+// Triangulo equilatero
 class Triangulo : public Figura {
 private:
     double base, altura;
@@ -47,11 +47,11 @@ public:
     }
 
     void mostrar() const override {
-        printer->imprimir("Triángulo", area(), perimetro());
+        printer->imprimir("Triangulo", area(), perimetro());
     }
 };
 
-// Círculo
+// Circulo
 class Circulo : public Figura {
 private:
     double radio;
@@ -67,7 +67,7 @@ public:
     }
 
     void mostrar() const override {
-        printer->imprimir("Círculo", area(), perimetro());
+        printer->imprimir("Circulo", area(), perimetro());
     }
 };
 
@@ -91,7 +91,7 @@ public:
     }
 };
 
-// Fábrica de figuras
+// Fabrica de figuras
 class FiguraFactory {
 public:
     static Figura* crear(const string& tipo, FigPrinter* printer) {
@@ -102,7 +102,7 @@ public:
     }
 };
 
-// Función principal
+// Funcion principal
 int main() {
     ConsolaFigPrinter printer;
 
