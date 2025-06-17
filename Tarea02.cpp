@@ -6,27 +6,24 @@ using namespace std;
 class Triangulo {
 public:
     float base, altura;
-
     
-    Triangulo(float b = 1, float h = 1) {
-        base = b;
-        altura = h;
+    Triangulo(float b=1, float h=1) {
+        base=b;
+        altura=h;
     }
-
     float calcularArea() const {
-        return (base * altura) / 2;
+        return (base*altura)/2;
     }
 };
 
 class Circulo {
 public:
     float radio;
-
     
-    Circulo(float r = 1) {
-        radio = r;
+    Circulo(float r=1) {
+        radio=r;
     }
-
+    
     float calcularArea() const {
         return M_PI * radio * radio;
     }
@@ -41,17 +38,17 @@ int main() {
     Triangulo t2(3, 4); // base = 3, altura = 4
     Circulo c2(2);      // radio = 2
 
-    cout << "Triángulo por defecto (base=1, altura=1):" << endl;
-    cout << "Área: " << t1.calcularArea() << endl;
+    cout << "Triangulo por defecto (base=1, altura=1):" << endl;
+    cout << "Area: " << t1.calcularArea() << endl;
 
-    cout << "\nTriángulo personalizado (base=3, altura=4):" << endl;
-    cout << "Área: " << t2.calcularArea() << endl;
+    cout << "\nTriangulo personalizado (base=3, altura=4):" << endl;
+    cout << "Area: " << t2.calcularArea() << endl;
 
-    cout << "\nCírculo por defecto (radio=1):" << endl;
-    cout << "Área: " << c1.calcularArea() << endl;
+    cout << "\nCirculo por defecto (radio=1):" << endl;
+    cout << "Area: " << c1.calcularArea() << endl;
 
-    cout << "\nCírculo personalizado (radio=2):" << endl;
-    cout << "Área: " << c2.calcularArea() << endl;
+    cout << "\nCirculo personalizado (radio=2):" << endl;
+    cout << "Area: " << c2.calcularArea() << endl;
 
     return 0;
 }
